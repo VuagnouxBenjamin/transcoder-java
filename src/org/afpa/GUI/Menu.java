@@ -1,11 +1,15 @@
 package org.afpa.GUI;
 
 import org.afpa.model.Message;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * This class shows a menu to the user. Letting him choose between coding or decoding a message.
+ *
+ * @author Benjamin Vuagnoux
+ */
 public class Menu {
 
     private Scanner sc = new Scanner(System.in);
@@ -15,6 +19,9 @@ public class Menu {
     private String keyPath;
     private Message message;
 
+    /**
+     * Initialisation of the menue with choices.
+     */
     public void initMenu() {
         System.out.printf(
                 "╔══════════════════════════════════════╗\n" +
@@ -38,19 +45,19 @@ public class Menu {
         } while ((number <= 0) || (number > 3));
 
         switch (number) {
-            case 1:
-                decodeMsg();
-            case 2:
-                encodeMsg();
-            case 3:
-                System.out.println("Merci et à bientôt.");
-                break;
-            default:
+            case 1 -> decodeMsg();
+            case 2 -> encodeMsg();
+            case 3 -> System.out.println("Merci et à bientôt.");
+            default -> {
                 System.out.println("Une erreur est survenue, le programme va se relancer");
                 initMenu();
+            }
         }
     }
 
+    /**
+     * Getting user input, validating them and then asking Message to handle the decoding process.
+     */
     private void decodeMsg() {
         //message needs to be decoded
         encoded = true;
@@ -74,9 +81,12 @@ public class Menu {
         System.out.println("====== Décodage =====");
 
         message = new Message(encoded, msgClearPath, msgEncodedPath, keyPath);
-        message.readNwrite();
+        System.out.println(message.readNwrite());;
     }
 
+    /**
+     * Getting user input, validating them and then asking Message to handle the coding process.
+     */
     private void encodeMsg() {
         // message needs to be encoded
         encoded = false;
@@ -101,7 +111,7 @@ public class Menu {
         System.out.println("====== Décodage =====");
 
         message = new Message(encoded, msgClearPath, msgEncodedPath, keyPath);
-        message.readNwrite();
-    }
+        System.out.println(message.readNwrite());;
 
+  }
 }

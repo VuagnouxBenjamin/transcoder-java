@@ -6,11 +6,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+
+/**
+ * This class decrypt the key and uses it either encode or decode a message.
+ *
+ * @author Benjamin Vuagnoux
+ */
 public class TransCoder {
 
     private HashMap<String, Character> encodeMap = new HashMap<String, Character>();
     private HashMap<Character, String> decodeMap = new HashMap<Character, String>();
 
+    /**
+     * Contructor used to initialize both Hashmaps.
+     *
+     * @param cryptKey: the key krypted with manabox
+     */
     public TransCoder(String cryptKey) {
         generateMaps(ManaBox.decrypt(cryptKey));
     }
@@ -23,6 +34,12 @@ public class TransCoder {
         return decodeMap;
     }
 
+    /**
+     * Transform a clear string into a coded string.
+     *
+     * @param toEncode: clear String that we want to encode.
+     * @return the String in its encoded version.
+     */
     public String encodeMsg(String toEncode) {
         ArrayList<String> encodedMessage = new ArrayList<String>();
 
@@ -36,6 +53,12 @@ public class TransCoder {
         return String.join("", encodedMessage);
     }
 
+    /**
+     * Transform a coded string into a clear one.
+     *
+     * @param toDecode: coded String that we want to decode.
+     * @return the String in its clear version
+     */
     public String decodeMsg(String toDecode) {
         ArrayList<String> decodedMsg = new ArrayList<String>();
 
@@ -50,6 +73,12 @@ public class TransCoder {
         return String.join("", decodedMsg);
     }
 
+    /**
+     * Used in decodeMsg(), split a coded string into an array of pairs.
+     *
+     * @param toDecode: encoded String that we want to split into pairs.
+     * @return an array of String (pairs of characters)
+     */
     private ArrayList<String> splitCode(String toDecode) {
         ArrayList<String> splitCode = new ArrayList<String>();
 
@@ -60,9 +89,13 @@ public class TransCoder {
         return splitCode;
     }
 
-    public HashMap<String, Character> generateMaps(String decryptedKey) {
+    /**
+     * Generate 2 private Hashmap properties to either encode and decode messages.
+     *
+     * @param decryptedKey: the key decrypted with manabox.
+     */
+    public void generateMaps(String decryptedKey) {
         char[] keyDecryptedArr = decryptedKey.toCharArray();
-        HashMap<String, Character> encode = new HashMap<String, Character>();
 
         int count = 0;
         for (char firstLetter = 'A'; firstLetter <= 'Z'; firstLetter++) {
@@ -76,7 +109,5 @@ public class TransCoder {
                 }
             }
         }
-        return encode;
     }
-
 }
